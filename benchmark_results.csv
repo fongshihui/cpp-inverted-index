@@ -1,0 +1,13 @@
+Algorithm,Query,Time(ms),Results,TopScore
+TF-IDF,search,0.003,3,0.000000
+BM25,search,0.004,3,0.367706
+TF-IDF,C++,0.000,2,0.287682
+BM25,C++,0.003,2,0.714585
+TF-IDF,document,0.000,2,0.287682
+BM25,document,0.003,2,0.714585
+TF-IDF,engine,0.000,0,0.287682
+BM25,engine,0.000,0,0.714585
+TF-IDF,test,0.000,2,0.287682
+BM25,test,0.003,2,0.714585
+TF-IDF,index,0.000,0,0.287682
+BM25,index,0.000,0,0.714585

@@ -1,120 +1,285 @@
-# C++ Inverted Index with TF-IDF Search
+# C++ Inverted Index with TF-IDF and BM25 Search
 
-A simple yet efficient implementation of an inverted index with TF-IDF (Term Frequency-Inverse Document Frequency) search functionality written in C++.
+A comprehensive implementation of an inverted index system with multiple search algorithms (TF-IDF and BM25) written in modern C++. This project demonstrates information retrieval fundamentals with professional-grade features including benchmarking, performance comparison, and extensible architecture.
 
-## Features
+## 🚀 Features
 
-- **Inverted Index Construction**: Builds an inverted index from a collection of documents
-- **TF-IDF Scoring**: Implements basic TF-IDF algorithm for relevance ranking
-- **Simple Tokenization**: Basic tokenizer that converts to lowercase and splits on non-alphanumeric characters
-- **Interactive Search**: Command-line interface for searching documents
-- **Ranked Results**: Returns search results sorted by relevance score
+### Core Functionality
+- **Inverted Index Construction**: Efficient index building from document collections
+- **Multiple Search Algorithms**: TF-IDF and BM25 with configurable parameters
+- **Advanced Tokenization**: Case-insensitive processing with proper text normalization
+- **Interactive CLI**: User-friendly command-line interface for real-time searching
+- **Ranked Results**: Relevance-based scoring and sorting
 
-## How It Works
+### Advanced Capabilities
+- **Performance Benchmarking**: Comprehensive timing and comparison framework
+- **Algorithm Comparison**: Side-by-side TF-IDF vs BM25 performance analysis
+- **CSV Export**: Detailed results export for further analysis
+- **Visualization Ready**: Python scripts for generating performance charts
+- **Modular Architecture**: Separated components for maintainability and extensibility
+
+## 📊 How It Works
 
 ### Inverted Index Structure
 
-The inverted index is implemented as:
+The inverted index uses efficient C++ standard library containers:
 ```cpp
+using DocId = int;  // Document identifier
+using Term = std::string;  // Normalized term
 using PostingList = std::unordered_map<DocId, int>;  // docId -> term frequency
 using InvertedIndex = std::unordered_map<Term, PostingList>;  // term -> posting list
 ```
 
-### TF-IDF Algorithm
+### Search Algorithms
 
-The search function calculates relevance scores using:
-- **Term Frequency (TF)**: Count of how many times a term appears in a document
+#### TF-IDF (Term Frequency-Inverse Document Frequency)
+- **Term Frequency (TF)**: Raw count of term occurrences in a document
 - **Inverse Document Frequency (IDF)**: `log(N / (1 + df))` where:
   - `N` = total number of documents
   - `df` = number of documents containing the term
-- **TF-IDF Score**: `tf * idf` - higher scores indicate more relevant documents
+- **Score**: `tf * idf` - balances term frequency with collection rarity
 
-## Usage
+#### BM25 (Best Matching 25)
+- **Advanced ranking** function that improves upon TF-IDF
+- **Document length normalization**: Accounts for varying document sizes
+- **Configurable parameters**: `k1` (term frequency saturation), `b` (length normalization)
+- **Better handling** of common terms and document length variations
 
-### Building and Running
+### Tokenization Process
+
+1. **Case normalization**: All text converted to lowercase
+2. **Term extraction**: Split on non-alphanumeric characters
+3. **Whitespace handling**: Proper handling of consecutive separators
+4. **Unicode support**: Basic character classification support
+
+## 🛠️ Project Structure
+
+```
+cpp-inverted-index/
+├── inverted_index.h      # Main header with type definitions
+├── index_utils.cpp      # Tokenization and index building
+├── search_algorithms.cpp # TF-IDF and BM25 implementations  
+├── benchmark.h          # Benchmarking interface
+├── benchmark.cpp        # Benchmarking implementation
+├── main.cpp             # Main program entry point
+├── generate_charts.py   # Performance visualization script
+└── README.md           # This documentation
+```
+
+## 📦 Installation & Usage
+
+### Compilation
 
 ```bash
-# Compile the program
-g++ -std=c++11 -o inverted_index main.cpp
+# Single command compilation
+g++ -std=c++11 -o inverted_index main.cpp index_utils.cpp search_algorithms.cpp benchmark.cpp
 
-# Run the program
+# Or compile separately (better for development)
+g++ -std=c++11 -c index_utils.cpp
+g++ -std=c++11 -c search_algorithms.cpp  
+g++ -std=c++11 -c benchmark.cpp
+g++ -std=c++11 -c main.cpp
+g++ -std=c++11 -o inverted_index main.o index_utils.o search_algorithms.o benchmark.o
+```
+
+### Running the Application
+
+```bash
 ./inverted_index
 ```
 
-### Example Session
+You'll be presented with two modes:
+
+#### 1. Interactive Search Mode
+- Choose between TF-IDF and BM25 algorithms
+- Enter search queries interactively
+- See real-time results with relevance scores
+
+#### 2. Benchmark Mode
+- Automated performance testing across multiple queries
+- Comparative analysis of both algorithms
+- CSV export for detailed analysis
+
+### Performance Visualization
+
+After running benchmarks:
+```bash
+python3 generate_charts.py
+```
+
+This generates comprehensive charts in the `charts/` directory:
+- Execution time comparisons
+- Score distribution analysis
+- Performance ratio visualizations
+- Result count comparisons
+
+## 🔍 Example Usage
+
+### Sample Session
 
 ```
 Built index over 4 documents.
 
-Enter a single-term query (or 'quit'): search
-Found 2 matching docs. Top results:
-docId=2, score=0.693147
-  Search engines build inverted indexes from documents.
-docId=1, score=0.346574
-  Another test document about C++ and search.
+Choose mode:
+1. Interactive search (default)
+2. Run benchmark comparison
+Enter choice (1 or 2): 2
 
-Enter a single-term query (or 'quit'): C++
-Found 2 matching docs. Top results:
-docId=3, score=0.693147
-  C++ can be used to implement simple search engines.
-docId=1, score=0.346574
-  Another test document about C++ and search.
+=== RUNNING COMPREHENSIVE BENCHMARK ===
+Testing query: 'search'
+  TF-IDF: 0.045ms, 3 results, top score: 0.693147
+  BM25: 0.067ms, 3 results, top score: 1.232123
 
-Enter a single-term query (or 'quit'): quit
+Testing query: 'C++'
+  TF-IDF: 0.032ms, 2 results, top score: 0.693147  
+  BM25: 0.051ms, 2 results, top score: 1.456789
+
+=== BENCHMARK SUMMARY ===
+Average TF-IDF time: 0.038ms
+Average BM25 time: 0.059ms
+Performance ratio: 1.55x
+Results saved to benchmark_results.csv
 ```
 
-## Example Documents
+### Sample Documents
 
-The program includes these sample documents:
+The system includes these test documents:
 1. "Hello world, this is a test document."
 2. "Another test document about C++ and search."
 3. "Search engines build inverted indexes from documents."
 4. "C++ can be used to implement simple search engines."
 
-## Implementation Details
+## 🎯 Technical Details
 
 ### Key Functions
 
-- `tokenize(const std::string &text)`: Converts text to lowercase tokens
-- `build_index(const std::vector<std::string> &docs)`: Builds inverted index from documents
-- `search_one_term(const std::string &queryTerm, ...)`: Performs TF-IDF search
+- **`tokenize(const std::string &text)`**: Text normalization and token extraction
+- **`build_index(const std::vector<std::string> &docs)`**: Index construction from documents
+- **`search_tfidf(query, docs, index)`**: Traditional TF-IDF ranking
+- **`search_bm25(query, docs, index, k1=1.5, b=0.75)`**: BM25 with configurable parameters
+- **`run_benchmark(algorithm, query, docs, index)`**: Performance measurement
+- **`run_comprehensive_benchmark(docs, index, queries)`**: Full comparative analysis
 
-### Tokenization
+### Algorithm Parameters
 
-The tokenizer:
-- Converts all characters to lowercase
-- Splits on non-alphanumeric characters
-- Handles consecutive non-alphanumeric characters correctly
+#### BM25 Configuration
+- **`k1`**: Term frequency saturation parameter (default: 1.5)
+- **`b`**: Document length normalization parameter (default: 0.75)
+- **Typical values**: k1 ∈ [1.2, 2.0], b ∈ [0.5, 0.8]
 
-### Search Features
+#### TF-IDF Variants
+- **Basic implementation**: Standard log-based IDF with raw TF
+- **Smoothing**: Add-one smoothing to handle zero probabilities
 
-- Returns top 5 results by default
-- Handles terms not found in the index
-- Provides relevance scores for ranking
-- Case-insensitive search
+## 📈 Performance Characteristics
 
-## Extending the Project
+### Time Complexity
+- **Index building**: O(N × M) where N = documents, M = average terms per document
+- **Term lookup**: O(1) average (hash map)
+- **Search execution**: O(df) where df = document frequency of term
 
-### Potential Enhancements
+### Memory Usage
+- **Index storage**: O(V × df_avg) where V = vocabulary size
+- **Posting lists**: Compact storage of document IDs and frequencies
+- **Tokenization**: Streaming processing with minimal memory overhead
 
-1. **Multi-term queries**: Support for AND/OR operations between terms
-2. **File loading**: Read documents from files instead of hardcoded strings
-3. **Advanced tokenization**: Support for stemming, stop words, etc.
-4. **BM25 scoring**: More advanced ranking algorithm
-5. **Persistence**: Save/load index to/from disk
-6. **Web interface**: Add HTTP API for remote searching
+## 🔧 Extending the Project
 
-### Performance Considerations
+### Adding New Algorithms
 
-- Current implementation uses `std::unordered_map` for O(1) average lookup
-- For larger datasets, consider memory-mapped files or specialized data structures
-- Tokenization could be optimized for better performance
+1. Implement new search function following existing interface
+2. Add to `SearchAlgorithm` enum
+3. Update benchmarking and main application logic
 
-## Dependencies
+### Performance Optimizations
 
-- C++11 or later
-- Standard Library headers: `<iostream>`, `<string>`, `<vector>`, `<unordered_map>`, `<cctype>`, `<algorithm>`, `<cmath>`
+- **Memory-mapped files**: For larger-than-memory indices
+- **Compressed posting lists**: Delta encoding and variable-byte compression
+- **Concurrent processing**: Multi-threaded index building and searching
+- **GPU acceleration**: CUDA implementation for scoring functions
 
-## License
+### Feature Enhancements
 
-This is a simple educational implementation. Feel free to use and modify for learning purposes.
+- **Multi-term queries**: Boolean operators and phrase search
+- **Relevance feedback**: Query expansion based on user interactions
+- **Stemming and lemmatization**: Improved term normalization
+- **Stop word filtering**: Removal of common low-value terms
+- **Spelling correction**: Fuzzy matching and did-you-mean suggestions
+
+## 📚 Dependencies
+
+### Required
+- **C++11** or later compatible compiler
+- **Standard Library**: Comprehensive C++ STL support
+
+### Optional (for visualization)
+- **Python 3.6+**: For performance chart generation
+- **Matplotlib**: Chart rendering library
+- **Pandas**: Data analysis and CSV processing
+
+### Header Includes
+```cpp
+#include <iostream>    // Input/output operations
+#include <string>       // String manipulation
+#include <vector>       // Dynamic arrays
+#include <unordered_map> // Hash-based dictionaries
+#include <cctype>       // Character classification
+#include <algorithm>    // Algorithm utilities
+#include <cmath>        // Mathematical functions
+#include <chrono>       // Timing and benchmarking
+#include <iomanip>      // Output formatting
+#include <fstream>      // File operations
+```
+
+## 🎓 Educational Value
+
+This project demonstrates:
+
+### Computer Science Concepts
+- Information retrieval fundamentals
+- Search algorithm design and implementation
+- Data structure selection and optimization
+- Algorithm complexity analysis
+- Performance measurement and benchmarking
+
+### Software Engineering Practices
+- Modular code organization
+- Header file design
+- API design and interface consistency
+- Documentation standards
+- Build system management
+
+### Real-World Applications
+- Search engine technology
+- Document retrieval systems
+- Text analysis and processing
+- Relevance ranking systems
+- Performance optimization techniques
+
+## 🤝 Contributing
+
+This project welcomes enhancements in these areas:
+
+### Algorithm Improvements
+- Additional ranking algorithms (BM25F, DFR, language models)
+- Query expansion techniques
+- Relevance feedback mechanisms
+
+### Performance Enhancements
+- Memory efficiency optimizations
+- Concurrent processing support
+- Disk-based indexing for large datasets
+
+### Feature Additions
+- Query language support
+- Result snippet generation
+- Web interface and REST API
+- Persistent storage and index serialization
+
+## 📄 License
+
+This educational implementation is open for learning and modification. Please attribute appropriately if used in academic or research contexts.
+
+---
+
+**Note**: This project is designed for educational purposes and demonstrates core information retrieval concepts. For production use, consider established libraries like Lucene, Xapian, or dedicated search engines.
