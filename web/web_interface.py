@@ -15,8 +15,8 @@ app = Flask(__name__)
 
 # Configuration
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-EXECUTABLE = os.path.join(PROJECT_DIR, "inverted_index")
-BENCHMARK_FILE = os.path.join(PROJECT_DIR, "benchmark_results.csv")
+EXECUTABLE = os.path.join(PROJECT_DIR, "../inverted_index")
+BENCHMARK_FILE = os.path.join(PROJECT_DIR, "../data/benchmark_results.csv")
 
 
 @app.route("/")

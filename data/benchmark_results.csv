@@ -1,5 +1,5 @@
 Algorithm,Query,Time(ms),Results,TopScore
-TF-IDF,search,0.005,3,0.000000
+TF-IDF,search,0.003,3,0.000000
 BM25,search,0.004,3,0.367706
 TF-IDF,C++,0.000,2,0.287682
 BM25,C++,0.003,2,0.714585

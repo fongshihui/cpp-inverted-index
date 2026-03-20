@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 
 # Project information
 PROJECT_NAME="C++ Inverted Index"
-TARGET="inverted_index"
+TARGET="../inverted_index"
 
 # Function to print colored output
 print_status() {

@@ -13,14 +13,14 @@ NC='\033[0m' # No Color
 # Project information
 PROJECT_NAME="C++ Inverted Index"
 VERSION="1.0.0"
-TARGET="inverted_index"
+TARGET="../inverted_index"
 
-# Source files
-SOURCES=("main.cpp" "index_utils.cpp" "search_algorithms.cpp" "benchmark.cpp")
+# Source files (relative to src/ directory)
+SOURCES=("src/main.cpp" "src/index_utils.cpp" "src/search_algorithms.cpp" "src/benchmark.cpp")
 
 # Compiler settings
 CXX="g++"
-CXXFLAGS="-std=c++11 -Wall -Wextra -O2"
+CXXFLAGS="-std=c++11 -Wall -Wextra -O2 -Iinclude"
 LDFLAGS=""
 
 # Function to print colored output

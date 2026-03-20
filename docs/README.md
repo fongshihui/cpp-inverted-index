@@ -56,19 +56,50 @@ using InvertedIndex = std::unordered_map<Term, PostingList>;  // term -> posting
 
 ```
 cpp-inverted-index/
-├── inverted_index.h      # Main header with type definitions
-├── index_utils.cpp      # Tokenization and index building
-├── search_algorithms.cpp # TF-IDF and BM25 implementations  
-├── benchmark.h          # Benchmarking interface
-├── benchmark.cpp        # Benchmarking implementation
-├── main.cpp             # Main program entry point
-├── generate_charts.py   # Performance visualization script
-└── README.md           # This documentation
+├── src/                    # C++ source code
+│   ├── main.cpp           # Main program entry point
+│   ├── index_utils.cpp    # Tokenization and index building
+│   ├── search_algorithms.cpp # TF-IDF and BM25 implementations
+│   └── benchmark.cpp      # Benchmarking implementation
+├── include/               # C++ header files
+│   ├── inverted_index.h   # Main header with type definitions
+│   └── benchmark.h       # Benchmarking interface
+├── web/                   # Web interface
+│   ├── web_interface.py  # Flask web server for visualization
+│   └── templates/
+│       └── index.html    # Web interface template
+├── scripts/               # Build and utility scripts
+│   ├── build.sh          # Automated build script
+│   ├── run.sh            # Multi-mode execution script
+│   └── generate_charts.py # Performance visualization script
+├── data/                  # Data files
+│   └── benchmark_results.csv # Benchmark results
+├── docs/                  # Documentation
+│   └── README.md         # This documentation
+└── .gitignore            # Git ignore rules
 ```
 
 ## 📦 Installation & Usage
 
-### Compilation
+### Build Automation
+
+Use the provided build script for easy compilation:
+
+```bash
+# Make the build script executable
+chmod +x build.sh
+
+# Run the build script
+./build.sh
+```
+
+The build script automatically:
+- Compiles all C++ source files with proper flags
+- Links all object files into the final executable
+- Handles both development and production builds
+- Provides clear error messages and success indicators
+
+### Manual Compilation (Alternative)
 
 ```bash
 # Single command compilation
@@ -84,6 +115,25 @@ g++ -std=c++11 -o inverted_index main.o index_utils.o search_algorithms.o benchm
 
 ### Running the Application
 
+You have multiple options:
+
+#### 1. Using the run script (recommended)
+```bash
+# Make the run script executable
+chmod +x run.sh
+
+# Run with default interactive mode
+./run.sh
+
+# Run benchmark mode
+./run.sh benchmark
+
+# Run with specific algorithm
+./run.sh tfidf
+./run.sh bm25
+```
+
+#### 2. Direct execution
 ```bash
 ./inverted_index
 ```
@@ -100,7 +150,28 @@ You'll be presented with two modes:
 - Comparative analysis of both algorithms
 - CSV export for detailed analysis
 
-### Performance Visualization
+### Web Interface Visualization
+
+Start the web interface for interactive search and visualization:
+
+```bash
+# Install Python dependencies (if not already installed)
+pip install flask
+
+# Start the web server
+python3 web_interface.py
+```
+
+Then open your browser to: `http://localhost:5000`
+
+**Web Interface Features:**
+- Real-time search with both TF-IDF and BM25 algorithms
+- Interactive search results with relevance scores
+- Performance benchmarking with visual charts
+- Live execution time measurements
+- Responsive design for desktop and mobile
+
+### Performance Visualization (CLI)
 
 After running benchmarks:
 ```bash
