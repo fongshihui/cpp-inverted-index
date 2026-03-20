@@ -181,8 +181,8 @@ def parse_search_results(output):
             # Parse document result
             parts = line.split(",")
             if len(parts) >= 2:
-                doc_id = parts[0].split("=")[1]
-                score = parts[1].split("=")[1]
+                doc_id = parts[0].split("=")[1].strip()
+                score = parts[1].split("=")[1].strip()
 
                 # Get content from next line
                 content_line = (
@@ -191,10 +191,23 @@ def parse_search_results(output):
                     else ""
                 )
 
+                # Safely convert to numbers, handling any parsing errors
+                try:
+                    doc_id_int = int(doc_id)
+                except ValueError:
+                    print(f"Warning: Could not convert doc_id '{doc_id}' to integer")
+                    continue
+
+                try:
+                    score_float = float(score)
+                except ValueError:
+                    print(f"Warning: Could not convert score '{score}' to float")
+                    continue
+
                 results["documents"].append(
                     {
-                        "doc_id": int(doc_id),
-                        "score": float(score),
+                        "doc_id": doc_id_int,
+                        "score": score_float,
                         "content": content_line.strip(),
                     }
                 )
