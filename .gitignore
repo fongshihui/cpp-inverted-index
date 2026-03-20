@@ -1,0 +1,95 @@
+# Compiled Object files
+*.o
+*.ko
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+inverted_index  # Your compiled binary
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+
+# Build directories
+build/
+Build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage reports
+*.gcda
+*.gcno
+
+# Dependency directories
+.deps/
+.dependency/
+
+# Temporary files
+*.tmp
+*.temp
+
+# CMake build files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Autotools
+autom4te.cache/
+*.in
+
+# Qt Creator
+*.user
+*.autosave
+
+# Visual Studio Code
+.vscode/
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
